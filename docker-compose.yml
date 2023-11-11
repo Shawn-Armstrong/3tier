@@ -16,10 +16,12 @@ services:
     build: ./backend
     ports:
       - "3000:3000" # Map host port 3000 to container port 3000
+    volumes:
+      - ./backend:/usr/src/app # Mount the backend directory to /usr/src/app in the container
+      - /usr/src/app/node_modules # Use a Docker named volume for node_modules
+    command: ["npm", "run", "dev"] # Ensure this is an array, or keep it as a string without brackets
     networks:
       - linkedin
-    depends_on:
-      - db
 
   db:
     image: postgres
