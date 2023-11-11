@@ -4,20 +4,15 @@ FROM node:latest
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
-
-# Install project dependencies
+# Install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the current directory contents into the container at /app
+# Copy project files into the container
 COPY . .
 
-# Build the app for production
-RUN npm run build
-
-# Vite serves the production build on port 5000 by default
+# Expose the port used by Vite
 EXPOSE 5173
 
-# Serve the app using Vite's preview mode, which is suitable for SPA production apps
+# Start the Vite server
 CMD ["npm", "run", "dev"]

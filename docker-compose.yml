@@ -3,14 +3,21 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "8080:5173"
+      - "8080:5173" # Map host port 8080 to container port 5173
+    volumes:
+      - ./frontend:/app # Mount your local frontend directory to /app in the container
+      - /app/node_modules # Use a Docker named volume for node_modules
     depends_on:
       - backend
+    networks:
+      - linkedin
 
   backend:
     build: ./backend
     ports:
-      - "3000:3000"
+      - "3000:3000" # Map host port 3000 to container port 3000
+    networks:
+      - linkedin
     depends_on:
       - db
 
@@ -21,10 +28,18 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "5432:5432" # Map host port 5432 to container port 5432
     volumes:
       - ./db:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - linkedin
+
+networks:
+  linkedin:
+    driver: bridge
 
 volumes:
   postgres_data:
+  # Define a volume for the node_modules so it doesn't get overridden by the host volume
+  node_modules:
