@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Expose the port used by Vite
-EXPOSE 5173
+EXPOSE 3000
 
 # Start the Vite server
 CMD ["npm", "run", "dev"]

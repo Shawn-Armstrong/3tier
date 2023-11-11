@@ -3,7 +3,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "8080:5173" # Map host port 8080 to container port 5173
+      - "8080:3000" # Map host port 8080 to container port 3000
     volumes:
       - ./frontend:/app # Mount your local frontend directory to /app in the container
       - /app/node_modules # Use a Docker named volume for node_modules
